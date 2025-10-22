@@ -1,7 +1,11 @@
 clear()
 
-def harvest_grass():
-	move(North)
+def harvest_column_grass():
+	for j in range(get_world_size()):
+		if get_entity_type() == Entities.Grass:
+			harvest()
+		move(North)
+	return
 
 def get_modulo_number(isEven):
 	number = 0 
@@ -27,7 +31,8 @@ def harvest_column(isEven):
 				if can_harvest():
 					harvest()
 					harvested = True
-				harvest_grass()
+				else:
+					harvest_column_grass()
 		move(North)
 
 first_run = True
@@ -42,6 +47,7 @@ while True:
 		cols_completed += 1
 		if world_size == cols_completed:
 			first_run = False
+			cols_completed = 0
 	
 	while not first_run:
 		isEven = get_pos_x() % 2 == True
@@ -50,3 +56,4 @@ while True:
 		cols_completed += 1
 		if world_size == cols_completed:
 			first_run = True
+			cols_completed = 0
