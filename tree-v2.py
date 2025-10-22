@@ -41,7 +41,7 @@ world_size = get_world_size()
 
 while True:
 	while first_run:
-		isEven = get_pos_x() % 2 == True
+		isEven = get_pos_x() % 2 == 0
 		plant_column(isEven)
 		move(East)
 		cols_completed += 1
@@ -50,7 +50,7 @@ while True:
 			cols_completed = 0
 	
 	while not first_run:
-		isEven = get_pos_x() % 2 == True
+		isEven = get_pos_x() % 2 == 0
 		harvest_column(isEven)
 		move(East)
 		cols_completed += 1
