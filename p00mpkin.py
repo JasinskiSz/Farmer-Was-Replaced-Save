@@ -5,6 +5,11 @@ clear()
 # width of the square
 n = 1
 
+desired_pumpkin_size = 6
+
+if desired_pumpkin_size > get_world_size():
+	desired_pumpkin_size = get_world_size()
+
 def plant_pumpkin(water):
 	if get_ground_type() == Grounds.Grassland:
 		till()
