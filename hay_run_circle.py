@@ -1,0 +1,4 @@
+clear()
+
+while True:
+	harvest()
