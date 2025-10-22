@@ -2,18 +2,18 @@ clear()
 
 first_run = True
 
-def get_boolean_number(isEven):
-    if isEven:
+def get_boolean_number(is_even):
+    if is_even:
         return 1
     return 0
 
-def reverse_boolean(isEven):
-    if isEven:
-        return get_boolean_number(isEven)
-    return get_boolean_number(isEven)
+def reverse_boolean(is_even):
+    if is_even:
+        return get_boolean_number(is_even)
+    return get_boolean_number(is_even)
 
-def column_movement(isEven):
-    number = reverse_boolean(isEven)
+def column_movement(is_even):
+    number = reverse_boolean(is_even)
 
     for i in range(get_world_size()):
         if can_harvest():
@@ -26,8 +26,8 @@ def column_movement(isEven):
 
         move(North)
 
-def column_movement_no_till(isEven):
-    number = reverse_boolean(isEven)
+def column_movement_no_till(is_even):
+    number = reverse_boolean(is_even)
 
     for i in range(get_world_size()):
         if can_harvest():
@@ -41,13 +41,13 @@ def column_movement_no_till(isEven):
 
 while first_run:
     for i in range(get_world_size()):
-        isEven = get_pos_x() % 2 == 0
-        column_movement(isEven)
+        is_even = get_pos_x() % 2 == 0
+        column_movement(is_even)
         move(East)
     
     first_run = False
 
 while not first_run:
-    isEven = get_pos_x() % 2 == 0
-    column_movement_no_till(isEven)
+    is_even = get_pos_x() % 2 == 0
+    column_movement_no_till(is_even)
     move(East)
