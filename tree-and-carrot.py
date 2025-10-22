@@ -7,13 +7,8 @@ def get_boolean_number(is_even):
         return 1
     return 0
 
-def reverse_boolean(is_even):
-    if is_even:
-        return get_boolean_number(is_even)
-    return get_boolean_number(is_even)
-
 def column_movement(is_even):
-    number = reverse_boolean(is_even)
+    number = get_boolean_number(is_even)
 
     for i in range(get_world_size()):
         if can_harvest():
@@ -27,7 +22,7 @@ def column_movement(is_even):
         move(North)
 
 def column_movement_no_till(is_even):
-    number = reverse_boolean(is_even)
+    number = get_boolean_number(is_even)
 
     for i in range(get_world_size()):
         if can_harvest():
