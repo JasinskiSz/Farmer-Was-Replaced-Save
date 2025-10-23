@@ -1,3 +1,5 @@
+import one_to_rule_them_all
+
 # moving in a square script
 
 clear()
@@ -5,30 +7,20 @@ clear()
 # width of the square
 n = 1
 
+should_water_plants = True
+
 desired_pumpkin_size = 6
 
 if desired_pumpkin_size > get_world_size():
 	desired_pumpkin_size = get_world_size()
 
-def plant_pumpkin(water):
-	if get_ground_type() == Grounds.Grassland:
-		till()
-	plant(Entities.Pumpkin)
-	if water and get_water() < 0.75:
-		use_item(Items.Water)
-
-def move_and_plant(direction, water):
-	move(direction)
-	plant_pumpkin(water)
-
 while True:
-
-	plant_pumpkin(True)
+	one_to_rule_them_all.plant_smth(Entities.Pumpkin, Grounds.Soil, should_water_plants)
 
 	for i in range(n-1):
-		move_and_plant(North, True)
+		one_to_rule_them_all.move_and_plant(Entities.Pumpkin, Grounds.Soil, North, should_water_plants)
 	for i in range(n-1):
-		move_and_plant(West, True)
+		one_to_rule_them_all.move_and_plant(Entities.Pumpkin, Grounds.Soil, West, should_water_plants)
 	for i in range(n-1):
 		move(South)
 
@@ -37,7 +29,7 @@ while True:
 		while not is_big_pumpkin:
 			is_grown = []
 			if not can_harvest():
-				plant_pumpkin(True)
+				one_to_rule_them_all.plant_smth(Entities.Pumpkin, Grounds.Soil, should_water_plants)
 				is_grown.append(False)
 			else:
 				is_grown.append(True)
@@ -45,7 +37,7 @@ while True:
 			for i in range(n-1):
 				move(East)
 				if not can_harvest():
-					plant_pumpkin(True)
+					one_to_rule_them_all.plant_smth(Entities.Pumpkin, Grounds.Soil, should_water_plants)
 					is_grown.append(False)
 				else:
 					is_grown.append(True)
@@ -54,7 +46,7 @@ while True:
 			for i in range(n-1):
 				move(North)
 				if not can_harvest():
-					plant_pumpkin(True)
+					one_to_rule_them_all.plant_smth(Entities.Pumpkin, Grounds.Soil, should_water_plants)
 					is_grown.append(False)
 				else:
 					is_grown.append(True)
@@ -62,7 +54,7 @@ while True:
 			for i in range(n-1):
 				move(West)
 				if not can_harvest():
-					plant_pumpkin(True)
+					one_to_rule_them_all.plant_smth(Entities.Pumpkin, Grounds.Soil, should_water_plants)
 					is_grown.append(False)
 				else:
 					is_grown.append(True)
