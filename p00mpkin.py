@@ -79,7 +79,7 @@ while True:
 
 	# if last world block is reached,
 	# harvest and reset the loop
-	if n == get_world_size():
+	if n == desired_pumpkin_size:
 		harvest()
 		n = 0
 
