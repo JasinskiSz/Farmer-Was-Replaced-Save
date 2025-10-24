@@ -15,3 +15,13 @@ def move_to_the_middle():
 	for i in range(half_size):
 		move(North)
 		move(East)
+
+def go_to_start():
+	x = get_pos_x()
+	y = get_pos_y()
+
+	for i in range(x):
+		move(West)
+	
+	for i in range(y):
+		move(South)
