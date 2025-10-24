@@ -20,6 +20,16 @@ def move_to_the_middle():
 		move(North)
 		move(East)
 
+def go_to_start():
+	x = get_pos_x()
+	y = get_pos_y()
+
+	for i in range(x):
+		move(West)
+	
+	for i in range(y):
+		move(South)
+
 def is_side_bigger_than_world(side_length):
 	return side_length > get_world_size()
 
@@ -50,3 +60,22 @@ def farm(x_size, y_size, entity, ground, shouldWater, move_north, move_east):
 				move(North)
 			else:
 				move(South)
+
+		# go back to the row start
+
+		# when farm is max size go
+		# over the edge
+		if max_farm:
+			if move_east:
+				move(East)
+			else:
+				move(West)
+		# when farm is smaller, go
+		# back using the opposite
+		# direction
+		else:
+			for i in range(farm_limit - 1):
+				if not move_east:
+					move(East)
+				else:
+					move(West)
