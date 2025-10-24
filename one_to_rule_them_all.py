@@ -1,3 +1,7 @@
+def harvest_smth():
+	if can_harvest():
+		return harvest()
+
 def plant_smth(entity, entity_ground_type, water):
 	if get_ground_type() != entity_ground_type:
 		till()
@@ -15,3 +19,34 @@ def move_to_the_middle():
 	for i in range(half_size):
 		move(North)
 		move(East)
+
+def is_side_bigger_than_world(side_length):
+	return side_length > get_world_size()
+
+def farm(x_size, y_size, entity, ground, shouldWater, move_north, move_east):
+	
+	if is_side_bigger_than_world(x_size):
+		x_size = get_world_size()
+		
+	if is_side_bigger_than_world(y_size):
+		y_size = get_world_size()
+
+	# going over y axis (columns up/down)
+	for y in range(y_size):
+		# going over x axis (rows left/right)
+		for x in range(x_size):
+			if can_harvest():
+				harvest()
+			plant_smth(entity, ground, shouldWater)
+			# on last block in row, don't move
+			if x != x_size - 1:
+				if move_east:
+					move(East)
+				else:
+					move(West)
+		# on last block in column, don't move
+		if y != y_size - 1:
+			if move_north:
+				move(North)
+			else:
+				move(South)
