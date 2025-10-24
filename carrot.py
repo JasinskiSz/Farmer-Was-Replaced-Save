@@ -1,5 +1,13 @@
 import one_to_rule_them_all
 
+def plant_sunflowers(farm_limit):
+	max_sunflower = 10
+	sunflower_count = 0
+	for i in range(farm_limit):
+		for j in range(farm_limit):
+			if sunflower_count < max_sunflower:
+				plant(Entities.Sunflower)
+
 clear()
 
 entity = Entities.Carrot
@@ -10,6 +18,8 @@ move_north = True
 move_east = True
 
 farm_limit = 6
+should_plant_sunflowers = False
+
 max_farm = False
 world_size = get_world_size()
 
@@ -18,6 +28,13 @@ if farm_limit > world_size:
 
 if farm_limit == world_size:
 	max_farm = True
+
+minimum_farm_size = 30
+if should_plant_sunflowers == True and farm_limit * farm_limit >= minimum_farm_size:
+	should_plant_sunflowers = True
+	print("Farm size is not big enough for sunflowers")
+else:
+	should_plant_sunflowers = False
 
 while True:
 	# moving over Y axis
