@@ -16,6 +16,55 @@ def move_to_the_middle():
 		move(North)
 		move(East)
 
+def go_to(x, y):
+	# """
+	# Moves the drone to the specified x and y
+	# coordinates
+	#
+	# Doesn't correctly work for all negative values
+	# especially when negative value of x should move
+	# drone to the right. I got it work to move
+	# correctly to the West (left) and South (down).
+	#
+	# Returns True when destination is reached
+	# Returns False when x or y exceed the world size
+	# """
+	x_now = get_pos_x()
+	y_now = get_pos_y()
+
+	if x == x_now and y == y_now:
+		return True
+
+	world_size = get_world_size()
+	if world_size < x or world_size < y:
+		return False
+	
+	move_north = True
+	move_east = True
+	
+	x_abs = x - x_now
+	y_abs = y - y_now
+
+	if x_abs < 0:
+		move_east = False
+		x_abs = abs(x_abs)
+
+	if y_abs < 0:
+		move_north = False
+		y_abs = abs(y_abs)
+
+	if x_abs > world_size:
+		x_abs -= world_size
+
+	if y_abs > world_size:
+		y_abs -= world_size
+
+	for i in range(x_abs):
+		move_if(move_east, East, West)
+
+	for i in range(y_abs):
+		move_if(move_north, North, South)
+
 def go_to_start():
 	x = get_pos_x()
 	y = get_pos_y()
