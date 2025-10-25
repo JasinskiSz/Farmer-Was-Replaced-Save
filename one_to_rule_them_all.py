@@ -16,6 +16,44 @@ def move_to_the_middle():
 		move(North)
 		move(East)
 
+def go_to(x, y):
+	"""
+	Moves the drone to the specified x and y
+	coordinates
+
+	Returns True when destination is reached
+	Returns False when x or y exceed the world size
+	"""
+	x_now = get_pos_x()
+	y_now = get_pos_y()
+
+	if x == x_now and y == y_now:
+		return True
+
+	world_size = get_world_size()
+	if world_size < x or world_size < y:
+		return False
+	
+	move_north = True
+	move_east = True
+	
+	x_abs = x - x_now
+	y_abs = y - y_now
+
+	if x_abs < 0:
+		move_east = False
+		x_abs = abs(x_abs)
+
+	if y_abs < 0:
+		move_north = False
+		y_abs = abs(y_abs)
+
+	for i in range(x_abs):
+		move_if(move_east, East, West)
+
+	for i in range(y_abs):
+		move_if(move_north, North, South)
+
 def go_to_start():
 	"""
 	Make the drone move to pos 0;0
@@ -29,11 +67,11 @@ def go_to_start():
 	for i in range(y):
 		move(South)
 
-def move_if(condition, goDirection, otherDirection):
+def move_if(condition, goDirection, otherwiseDirection):
 	if condition:
 		move(goDirection)
 	else:
-		move(otherDirection)
+		move(otherwiseDirection)
 
 def farm(x_size, y_size, entity, ground, loopCondition, shouldWater, move_north, move_east):
 
