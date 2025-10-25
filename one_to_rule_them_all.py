@@ -29,6 +29,12 @@ def go_to_start():
 	for i in range(y):
 		move(South)
 
+def move_if(condition, goDirection, otherDirection):
+	if condition:
+		move(goDirection)
+	else:
+		move(otherDirection)
+
 def farm(x_size, y_size, entity, ground, shouldWater, move_north, move_east):
 
 	world_size = get_world_size()
@@ -57,38 +63,25 @@ def farm(x_size, y_size, entity, ground, shouldWater, move_north, move_east):
 					move(West)
 		# on last block in column, don't move
 		if y != y_size - 1:
-			if move_north:
-				move(North)
-			else:
-				move(South)
+			move_if(move_north, North, South)
 
 		# go back to the row start
 		# when farm x size is max go over the edge
 		if max_x_size:
-			if move_east:
-				move(East)
-			else:
-				move(West)
+			move_if(move_east, East, West)
+
 		# when farm is smaller, go back using
 		# the opposite direction
 		else:
 			for i in range(x_size - 1):
-				if not move_east:
-					move(East)
-				else:
-					move(West)
+				move_if(move_east, West, East)
 	# go back to the column start
 	# when farm x size is max go over the edge
 	if max_y_size:
-		if move_north:
-			move(North)
-		else:
-			move(South)
+		move_if(move_north, North, South)
+		
 	# when farm is smaller, go back using
 	# the opposite direction
 	else:
 		for i in range(y_size - 1):
-			if not move_north:
-				move(North)
-			else:
-				move(South)
+			move_if(move_north, South, North)
