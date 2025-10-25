@@ -35,53 +35,54 @@ def move_if(condition, goDirection, otherDirection):
 	else:
 		move(otherDirection)
 
-def farm(x_size, y_size, entity, ground, shouldWater, move_north, move_east):
+def farm(x_size, y_size, entity, ground, loopCondition, shouldWater, move_north, move_east):
 
 	world_size = get_world_size()
 
 	if x_size > world_size:
 		x_size = world_size
-		
+
 	if y_size > world_size:
 		y_size = world_size
 
 	max_x_size = x_size == world_size 
 	max_y_size = y_size == world_size
 
-	# going over y axis (columns up/down)
-	for y in range(y_size):
-		# going over x axis (rows left/right)
-		for x in range(x_size):
-			if can_harvest():
-				harvest()
-			plant_smth(entity, ground, shouldWater)
-			# on last block in row, don't move
-			if x != x_size - 1:
-				if move_east:
-					move(East)
-				else:
-					move(West)
-		# on last block in column, don't move
-		if y != y_size - 1:
-			move_if(move_north, North, South)
+	while loopCondition:
+		# going over y axis (columns up/down)
+		for y in range(y_size):
+			# going over x axis (rows left/right)
+			for x in range(x_size):
+				if can_harvest():
+					harvest()
+				plant_smth(entity, ground, shouldWater)
+				# on last block in row, don't move
+				if x != x_size - 1:
+					if move_east:
+						move(East)
+					else:
+						move(West)
+			# on last block in column, don't move
+			if y != y_size - 1:
+				move_if(move_north, North, South)
 
-		# go back to the row start
+			# go back to the row start
+			# when farm x size is max go over the edge
+			if max_x_size:
+				move_if(move_east, East, West)
+
+			# when farm is smaller, go back using
+			# the opposite direction
+			else:
+				for i in range(x_size - 1):
+					move_if(move_east, West, East)
+		# go back to the column start
 		# when farm x size is max go over the edge
-		if max_x_size:
-			move_if(move_east, East, West)
+		if max_y_size:
+			move_if(move_north, North, South)
 
 		# when farm is smaller, go back using
 		# the opposite direction
 		else:
-			for i in range(x_size - 1):
-				move_if(move_east, West, East)
-	# go back to the column start
-	# when farm x size is max go over the edge
-	if max_y_size:
-		move_if(move_north, North, South)
-		
-	# when farm is smaller, go back using
-	# the opposite direction
-	else:
-		for i in range(y_size - 1):
-			move_if(move_north, South, North)
+			for i in range(y_size - 1):
+				move_if(move_north, South, North)
