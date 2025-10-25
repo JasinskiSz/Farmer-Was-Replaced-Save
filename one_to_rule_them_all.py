@@ -57,15 +57,9 @@ def go_to(x, y):
 def go_to_start():
 	"""
 	Make the drone move to pos 0;0
+	Short for go_to(0, 0)
 	"""
-	x = get_pos_x()
-	y = get_pos_y()
-
-	for i in range(x):
-		move(West)
-	
-	for i in range(y):
-		move(South)
+	go_to(0,0)
 
 def move_if(condition, goDirection, otherwiseDirection):
 	if condition:
