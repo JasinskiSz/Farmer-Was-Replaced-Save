@@ -21,6 +21,9 @@ def move_to_the_middle():
 		move(East)
 
 def go_to_start():
+	"""
+	Make the drone move to pos 0;0
+	"""
 	x = get_pos_x()
 	y = get_pos_y()
 
