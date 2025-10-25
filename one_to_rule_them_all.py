@@ -29,16 +29,18 @@ def go_to_start():
 	for i in range(y):
 		move(South)
 
-def is_side_bigger_than_world(side_length):
-	return side_length > get_world_size()
-
 def farm(x_size, y_size, entity, ground, shouldWater, move_north, move_east):
-	
-	if is_side_bigger_than_world(x_size):
-		x_size = get_world_size()
+
+	world_size = get_world_size()
+
+	if x_size > world_size:
+		x_size = world_size
 		
-	if is_side_bigger_than_world(y_size):
-		y_size = get_world_size()
+	if y_size > world_size:
+		y_size = world_size
+
+	max_x_size = x_size == world_size 
+	max_y_size = y_size == world_size
 
 	# going over y axis (columns up/down)
 	for y in range(y_size):
@@ -61,20 +63,32 @@ def farm(x_size, y_size, entity, ground, shouldWater, move_north, move_east):
 				move(South)
 
 		# go back to the row start
-
-		# when farm is max size go
-		# over the edge
-		if max_farm:
+		# when farm x size is max go over the edge
+		if max_x_size:
 			if move_east:
 				move(East)
 			else:
 				move(West)
-		# when farm is smaller, go
-		# back using the opposite
-		# direction
+		# when farm is smaller, go back using
+		# the opposite direction
 		else:
-			for i in range(farm_limit - 1):
+			for i in range(x_size - 1):
 				if not move_east:
 					move(East)
 				else:
 					move(West)
+	# go back to the column start
+	# when farm x size is max go over the edge
+	if max_y_size:
+		if move_north:
+			move(North)
+		else:
+			move(South)
+	# when farm is smaller, go back using
+	# the opposite direction
+	else:
+		for i in range(y_size - 1):
+			if not move_north:
+				move(North)
+			else:
+				move(South)
