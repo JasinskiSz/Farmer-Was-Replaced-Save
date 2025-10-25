@@ -1,6 +1,6 @@
 import one_to_rule_them_all
 
-clear()
+one_to_rule_them_all.go_to_start()
 
 entity = Entities.Carrot
 ground = Grounds.Soil
