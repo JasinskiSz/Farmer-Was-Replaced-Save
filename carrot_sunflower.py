@@ -4,7 +4,7 @@ clear()
 
 entity = Entities.Carrot
 ground = Grounds.Soil
-shouldWater = False
+shouldWater = True
 
 move_north = True
 move_east = True
@@ -43,7 +43,7 @@ while True:
 				if entityType == Entities.Sunflower:
 					sunflower_count -= 1
 			if sunflower_count < max_sunflower:
-				one_to_rule_them_all.plant_smth(Entities.Sunflower, Grounds.Soil, False)
+				one_to_rule_them_all.plant_smth(Entities.Sunflower, Grounds.Soil, shouldWater)
 				sunflower_count += 1
 			else:
 				one_to_rule_them_all.plant_smth(entity, ground, shouldWater)
