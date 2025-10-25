@@ -1,7 +1,3 @@
-def harvest_smth():
-	if can_harvest():
-		return harvest()
-
 def plant_smth(entity, entity_ground_type, water):
 	if get_ground_type() != entity_ground_type:
 		till()
