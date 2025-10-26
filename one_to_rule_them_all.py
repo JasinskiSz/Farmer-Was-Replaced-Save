@@ -9,6 +9,10 @@ def move_and_plant(entity, ground, direction, water):
 	move(direction)
 	plant_smth(entity, ground, water)
 
+def plant_and_move(entity, ground, direction, water):
+	plant_smth(entity, ground, water)
+	move(direction)
+
 # This function will work if starting position is 0,0
 def move_to_the_middle():
 	half_size = (get_world_size() / 2) - 1
