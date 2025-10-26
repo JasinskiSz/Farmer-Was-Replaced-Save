@@ -1,37 +1,70 @@
 import one_to_rule_them_all
 
+def check():
+	x, y = get_pos_x(), get_pos_y()
+	return {(x,y):can_harvest()}
+
+def repair_pumpkin(dict, entity, ground, use_water):
+	ready = True
+	for key in dict:
+		if not dict[key]:
+			x, y = key
+			one_to_rule_them_all.go_to(x, y)
+			one_to_rule_them_all.plant_smth(entity, ground, use_water)
+			ready = False
+	one_to_rule_them_all.go_to_start()
+	return ready
+
 clear()
 
 # width of the pumpkin square
-pumpkin_width = 1
+pumpkin_width = 6
 
-should_water_plants = True
+use_water = True
 entity = Entities.Pumpkin
 ground = Grounds.Soil
 
-desired_pumpkin_size = 6
+if pumpkin_width > get_world_size():
+	pumpkin_width = get_world_size()
 
-if desired_pumpkin_size > get_world_size():
-	desired_pumpkin_size = get_world_size()
+loop_condition = True
+move_east = True
+move_north = True
 
-while True:
-	one_to_rule_them_all.plant_smth(entity, ground, should_water_plants)
+now_plant = True
+now_check = False
+now_harvest = False
 
-	for i in range(pumpkin_width-1):
-		one_to_rule_them_all.move_and_plant(entity, ground, North, should_water_plants)
-	for i in range(pumpkin_width-1):
-		one_to_rule_them_all.move_and_plant(entity, ground, West, should_water_plants)
-	for i in range(pumpkin_width-1):
-		move(South)
+check_dict = {}
 
-	# if last world block is reached,
-	# harvest and reset the loop
-	if pumpkin_width == desired_pumpkin_size:
-		harvest()
-		pumpkin_width = 0
+counter = 0
+pumpkin_squared = pumpkin_width * pumpkin_width
 
-	# goes to next starting position
-	for i in range(pumpkin_width):
-		move(East)
+while loop_condition:
+	for y in range(pumpkin_width):
+		for x in range(pumpkin_width):
+			if now_plant and x < pumpkin_width - 1:
+				one_to_rule_them_all.plant_and_move_if(entity, ground, move_east, East, West, use_water)
+			elif now_plant:
+				one_to_rule_them_all.plant_smth(entity, ground, use_water)
+				move_east = not move_east
+			elif now_check:
+				if counter == pumpkin_squared:
+					if repair_pumpkin(check_dict, entity, ground, use_water):
+						now_check = False
+						now_harvest = True
+					counter = 0
+				else:
+					counter += 1
+					quick_print("Should add to dict")
+					check_dict = {(x,y):can_harvest()}
+			elif now_harvest:
+				do_a_flip()
+		if y < pumpkin_width - 1:
+			one_to_rule_them_all.move_if(move_north, North, South)
+		else:
+			move_north = not move_north
 
-	pumpkin_width += 1
+	if now_plant:
+		now_plant = False
+		now_check = True
