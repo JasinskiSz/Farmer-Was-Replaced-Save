@@ -13,6 +13,10 @@ def plant_and_move(entity, ground, direction, water):
 	plant_smth(entity, ground, water)
 	move(direction)
 
+def plant_and_move_if(entity, ground, condition, direction, otherwiseDirection, water):
+	plant_smth(entity, ground, water)
+	move_if(condition, direction, otherwiseDirection)
+
 # This function will work if starting position is 0,0
 def move_to_the_middle():
 	half_size = (get_world_size() / 2) - 1
