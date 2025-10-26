@@ -36,6 +36,7 @@ def go_to(x, y):
 		return True
 
 	world_size = get_world_size()
+	# TODO Actually it could go over world n times
 	if world_size < x or world_size < y:
 		return False
 	
