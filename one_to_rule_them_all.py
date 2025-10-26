@@ -47,27 +47,37 @@ def go_to(x, y):
 	move_north = True
 	move_east = True
 	
-	x_abs = x - x_now
-	y_abs = y - y_now
+	x_move = x - x_now
+	y_move = y - y_now
 
-	if x_abs < 0:
+	if x_move > world_size / 2:
 		move_east = False
-		x_abs = abs(x_abs)
+		x_move -= world_size
+		x_move = abs(x_move)
+	elif x_move < 0:
+		x_abs = abs(x_move)
+		if x_abs > world_size / 2:
+			x_move += world_size
+		else:
+			move_east = False
+			x_move = x_abs
 
-	if y_abs < 0:
+	if y_move > world_size / 2:
 		move_north = False
-		y_abs = abs(y_abs)
+		y_move -= world_size
+		y_move = abs(y_move)
+	elif y_move < 0:
+		y_abs = abs(y_move)
+		if y_abs > world_size / 2:
+			y_move += world_size
+		else:
+			move_north = False
+			y_move = y_abs
 
-	if x_abs > world_size:
-		x_abs -= world_size
-
-	if y_abs > world_size:
-		y_abs -= world_size
-
-	for i in range(x_abs):
+	for i in range(x_move):
 		move_if(move_east, East, West)
 
-	for i in range(y_abs):
+	for i in range(y_move):
 		move_if(move_north, North, South)
 
 def go_to_start():
