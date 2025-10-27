@@ -29,11 +29,6 @@ def go_to(x, y):
 	# Moves the drone to the specified x and y
 	# coordinates
 	#
-	# Doesn't correctly work for all negative values
-	# especially when negative value of x should move
-	# drone to the right. I got it work to move
-	# correctly to the West (left) and South (down).
-	#
 	# Returns True when destination is reached
 	# Returns False when x or y exceed the world size
 	# """
@@ -83,6 +78,8 @@ def go_to(x, y):
 
 	for i in range(y_move):
 		move_if(move_north, North, South)
+
+	return True
 
 def go_to_start():
 	x = get_pos_x()
