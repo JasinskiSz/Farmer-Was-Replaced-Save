@@ -9,6 +9,14 @@ def move_and_plant(entity, ground, direction, water):
 	move(direction)
 	plant_smth(entity, ground, water)
 
+def plant_and_move(entity, ground, direction, water):
+	plant_smth(entity, ground, water)
+	move(direction)
+
+def plant_and_move_if(entity, ground, condition, direction, otherwiseDirection, water):
+	plant_smth(entity, ground, water)
+	move_if(condition, direction, otherwiseDirection)
+
 # This function will work if starting position is 0,0
 def move_to_the_middle():
 	half_size = (get_world_size() / 2) - 1
@@ -17,13 +25,13 @@ def move_to_the_middle():
 		move(East)
 
 def go_to(x, y):
-	"""
-	Moves the drone to the specified x and y
-	coordinates
-
-	Returns True when destination is reached
-	Returns False when x or y exceed the world size
-	"""
+	# """
+	# Moves the drone to the specified x and y
+	# coordinates
+	#
+	# Returns True when destination is reached
+	# Returns False when x or y exceed the world size
+	# """
 	x_now = get_pos_x()
 	y_now = get_pos_y()
 
@@ -31,35 +39,57 @@ def go_to(x, y):
 		return True
 
 	world_size = get_world_size()
+	# TODO Actually it could go over world n times
 	if world_size < x or world_size < y:
 		return False
 	
 	move_north = True
 	move_east = True
 	
-	x_abs = x - x_now
-	y_abs = y - y_now
+	x_move = x - x_now
+	y_move = y - y_now
 
-	if x_abs < 0:
+	if x_move > world_size / 2:
 		move_east = False
-		x_abs = abs(x_abs)
+		x_move -= world_size
+		x_move = abs(x_move)
+	elif x_move < 0:
+		x_abs = abs(x_move)
+		if x_abs > world_size / 2:
+			x_move += world_size
+		else:
+			move_east = False
+			x_move = x_abs
 
-	if y_abs < 0:
+	if y_move > world_size / 2:
 		move_north = False
-		y_abs = abs(y_abs)
+		y_move -= world_size
+		y_move = abs(y_move)
+	elif y_move < 0:
+		y_abs = abs(y_move)
+		if y_abs > world_size / 2:
+			y_move += world_size
+		else:
+			move_north = False
+			y_move = y_abs
 
-	for i in range(x_abs):
+	for i in range(x_move):
 		move_if(move_east, East, West)
 
-	for i in range(y_abs):
+	for i in range(y_move):
 		move_if(move_north, North, South)
 
+	return True
+
 def go_to_start():
-	"""
-	Make the drone move to pos 0;0
-	Short for go_to(0, 0)
-	"""
-	go_to(0,0)
+	x = get_pos_x()
+	y = get_pos_y()
+
+	for i in range(x):
+		move(West)
+	
+	for i in range(y):
+		move(South)
 
 def move_if(condition, goDirection, otherwiseDirection):
 	if condition:
@@ -90,10 +120,7 @@ def farm(x_size, y_size, entity, ground, loopCondition, shouldWater, move_north,
 				plant_smth(entity, ground, shouldWater)
 				# on last block in row, don't move
 				if x != x_size - 1:
-					if move_east:
-						move(East)
-					else:
-						move(West)
+					move_if(move_east, East, West)
 			# on last block in column, don't move
 			if y != y_size - 1:
 				move_if(move_north, North, South)
