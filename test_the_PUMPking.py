@@ -3,6 +3,9 @@ import one_to_rule_them_all
 # width of the pumpkin square
 pumpkin_width = 6
 
+# how many pumpkins to make
+runs_number = 10
+
 use_water = True
 entity = Entities.Pumpkin
 ground = Grounds.Soil
@@ -60,7 +63,7 @@ while loop_condition:
 				x_pos = get_pos_x()
 				y_pos = get_pos_y()
 				tiles.append((x_pos, y_pos))
-				# one_to_rule_them_all.plant_smth(entity, ground, use_water)
+				one_to_rule_them_all.plant_smth(entity, ground, use_water)
 			if x < pumpkin_width - 1:
 				one_to_rule_them_all.move_if(move_east, East, West)
 			else:
@@ -117,7 +120,7 @@ while loop_condition:
 	quick_print("pumpkins per second: " + str(pumpkins_per_second))
 	quick_print("----------------------------")
 
-	if counter >= 10:
+	if counter >= runs_number:
 		loop_condition = False
 
 total = 0
