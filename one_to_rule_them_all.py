@@ -146,3 +146,12 @@ def farm(x_size, y_size, entity, ground, loopCondition, shouldWater, move_north,
 		else:
 			for i in range(y_size - 1):
 				move_if(move_north, South, North)
+				
+def till_ground(ground):
+	world_size = get_world_size()
+	for y in range(world_size):
+		for x in range(world_size):
+			if (ground != get_ground_type()):
+				till()
+			move(East)
+		move(North)
